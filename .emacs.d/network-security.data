@@ -1,0 +1,5 @@
+(
+ (:id "sha1:1281e6b8174642f83221222c6f4835ad92f32136" :fingerprints ("sha1:ec:b7:17:8f:c8:ca:f9:ce:b4:20:97:92:0c:33:c5:b6:5d:7b:21:ef" "sha1:44:bb:f6:e2:7f:d9:13:fc:ec:fc:f9:ff:96:b0:e9:58:28:eb:13:7e") :host "smtp.office365.com:587" :conditions (:same-cert))
+ (:id "sha1:706608f9b7fcfdea563351d49047f296d74a5a76" :fingerprints ("sha1:fc:8c:5d:c2:fa:3b:06:25:52:f5:48:a4:51:41:f2:55:cf:2c:73:33" "sha1:b5:5e:59:0a:ed:1f:ae:76:50:1a:f8:bc:88:23:38:de:c9:c1:2d:d4" :none) :host "smtp.gmail.com:587" :conditions (:unencrypted))
+ (:id "sha1:60d5181487044df8465f7968aa3d3ce67dd1a25a" :fingerprints ("sha1:7f:a5:0a:24:36:a6:8d:72:93:6e:11:e4:89:23:c8:47:47:1b:8a:c0") :conditions nil)
+)

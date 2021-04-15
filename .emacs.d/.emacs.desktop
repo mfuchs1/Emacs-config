@@ -1,0 +1,199 @@
+;; -*- mode: emacs-lisp; lexical-binding:t; coding: utf-8-emacs; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Thu Apr 15 09:32:57 2021
+;; Desktop file format version 208
+;; Emacs version 27.2
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (24695 60457 543556 392000) (desktop . "208") "matthias@manjaro" nil nil ((((minibuffer . t) (undecorated) (override-redirect) (font . "-ADBO-Source Code Pro-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1") (font-parameter . "Source Code Pro 10") (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#fdf4c1") (background-color . "#282828") (mouse-color . "#232629") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (no-special-glyphs) (scroll-bar-foreground . "#232629") (scroll-bar-background . "#232629") (menu-bar-lines . 1) (tab-bar-lines . 0) (height . 54) (tool-bar-lines . 1) (title) (wait-for-wm . t) (tool-bar-position . top) (inhibit-double-buffering) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 16) (scroll-bar-height . 16) (alpha) (no-focus-on-map) (no-accept-focus) (fullscreen) (visibility . t) (skip-taskbar) (z-group) (display-type . color) (background-mode . dark) (cursor-color . "#fdf4c1") (sticky) (environment) (powerline-cache) (last-focus-update . t) (frameset--id . "FDBC-2388-337B-1655") (frameset--mini t . t) (modeline . t) (unsplittable) (icon-name) (display . ":0") (explicit-name) (tabs (current-tab (name . "*helm M-x*") (explicit-name))) (width . 200) (left . 0) (top . 0)) ((min-height . 4) (min-width . 57) (min-height-ignore . 2) (min-width-ignore . 8) (min-height-safe . 1) (min-width-safe . 4) (min-pixel-height . 68) (min-pixel-width . 456) (min-pixel-height-ignore . 34) (min-pixel-width-ignore . 64) (min-pixel-height-safe . 17) (min-pixel-width-safe . 32)) hc (pixel-width . 1616) (pixel-height . 901) (total-width . 202) (total-height . 53) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (leaf (pixel-width . 376) (pixel-height . 901) (total-width . 47) (total-height . 53) (normal-height . 1.0) (normal-width . 0.23267326732673266) (parameters (window-side . left) (window-slot . 0)) (buffer " *NeoTree*" (selected) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated . t) (point . 1) (start . 1))) (leaf (last . t) (pixel-width . 1240) (pixel-height . 901) (total-width . 155) (total-height . 53) (normal-height . 1.0) (normal-width . 0.7673267326732673) (buffer "04_Golling.org" (selected . t) (hscroll . 0) (fringes 8 8 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 69605) (start . 68930)) (prev-buffers (":home" 1 1) ("*mu4e-headers*" 1 1) ("01_Golling.org" 81629 83298) ("*dashboard*" 1 521) ("03_Golling.org" 57941 58825) ("04_Golling.org" 67754 67818) ("02_Golling.org" 53586 53587) ("personal.org" 1 1)))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '(#("Guardini" 0 8 (isearch-regexp-function nil isearch-case-fold-search nil))))
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("/home/matthias/org/latex-export.org" "~/Downloads/2021-03-24_334344772_Mountainbike-Tour 24.03.2021 15 29.gpx" "/home/matthias/org/Fahhradtour.org" "~/Dokumente/LaTex_2/Physik_6B/Physik_6B.tex" "~/org/04_Golling.org" "~/org/03_Golling.org" "~/org/02_Golling.org" "~/org/02_Golling.aux" "~/org/01_Golling.org" "/home/matthias/Dokumente/LaTex_2/Physik_6B/Physik_6B.tex" "~/org/Bibliography/Literatur.bib" "~/org/02_Golling.tex" "~/Downloads/Arbeitsblatt-Religion-Ostern.pdf" "~/Bilder/Jesus_Kreuz.jpg" "~/Downloads/'Arbeitsblatt-Religion-Ostern.pdf" "/home/matthias/org/corona_tagebuch.org" "~/.emacs" "~/org/tasks.org" "~/.authinfo" "/home/matthias/Dokumente/LaTex_2/Physik_6B/Physik_6B.tex" "~/.emacs.d/elpa/gruvbox-theme-20210105.1136/gruvbox-theme-autoloads.el" "~/.emacs.d/elpa/autothemer-20180920.923/autothemer-autoloads.el" "~/.emacs.d/elpa/dash-20210308.2109/dash-autoloads.el"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  "/home/matthias/org/04_Golling.org"
+  "04_Golling.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode auto-revert-mode)
+  69605
+  '(65135 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24695 59973 301320 168000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring (62020 60151 64167 67044 63464 65184 66988 65612 69177 69177 69792 69675 69792 69832 69857 69315))))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/01_Golling.org"
+  "01_Golling.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode auto-revert-mode)
+  83298
+  '(79408 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24695 59455 711280 597000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring (77740 75124 74121 71483 70454 62243 75977 77012 80283 79241 278 79407 77424 77395 77011 83237))))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/03_Golling.org"
+  "03_Golling.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode auto-revert-mode)
+  58825
+  '(58870 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24695 59065 764419 585000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring (51396 51414 51026 49866 46409 43615 42719 56726 53994 55005 56670 43640 51402 55624 58880 58825))))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/02_Golling.org"
+  "02_Golling.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode auto-revert-mode)
+  53587
+  '(52753 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24695 36821 110116 896000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring (47471 47072 46432 44417 43262 43040 42523 52808 49340 48592 50202 52670 53540 52807 51255))))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/personal.org"
+  "personal.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode auto-revert-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24695 36786 113867 75000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/matthias/.emacs.d/elpa/org-plus-contrib-20210412/org-loaddefs.el"
+  "org-loaddefs.el"
+  'emacs-lisp-mode
+  '(visual-line-mode eldoc-mode helm-mode rainbow-delimiters-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode)
+  152977
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24695 36274 597811 232000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/Schule_Themen/auferstehung.org"
+  "auferstehung.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode)
+  1965
+  '(13242 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24695 24279 425288 427000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring (13029 13200 255 10768 10735 11134 10468 10734 10734 10767 11135 11963 11333 12133 254 13286))))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/tasks.org"
+  "tasks.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode auto-revert-mode)
+  6806
+  '(2634 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24695 22028 654900 666000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring (2769 2676 2768 2724 2679 2637 2729 2658 2809 2872 2643 355 3413 5799 6299 6806))))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/org-gcal.org"
+  "org-gcal.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode auto-revert-mode)
+  1
+  '(1 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24695 21911 178980 946000) (buffer-file-coding-system . undecided-unix) (truncate-lines))
+  '((mark-ring (500 1 1 1151 507 nil nil 1 258 1))))
+
+(desktop-create-buffer 208
+  "/home/matthias/Dokumente/LaTex_2/Physik_6B/Physik_6B.tex"
+  "Physik_6B.tex"
+  'latex-mode
+  '(visual-line-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode)
+  34467
+  '(1 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24694 44208 227524 200000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring (1006 984 6639))))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/Fahhradtour.org"
+  "Fahhradtour.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode)
+  17830
+  '(17817 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24694 43935 736170 204000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring (17830))))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/Bibliography/Literatur.bib"
+  "Literatur.bib"
+  'bibtex-mode
+  '(visual-line-mode helm-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode auto-revert-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24694 43802 349931 87000) (buffer-file-coding-system . utf-8-unix) (truncate-lines) (TeX-master . t))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/matthias/.emacs.d/diary"
+  "diary"
+  'diary-mode
+  '(visual-line-mode helm-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24694 16593 72742 948000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/Bauer1962.org"
+  "Bauer1962.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24694 4609 528060 819000) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/home/matthias/org/Guardini.2007.org"
+  "Guardini.2007.org"
+  'org-mode
+  '(visual-line-mode eldoc-mode helm-mode auto-complete-mode TeX-PDF-mode autopair-mode override-global-mode org-roam-mode projectile-mode org-roam-bibtex-mode org-indent-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-display-time 24695 59065 720836 751000) (buffer-file-coding-system . undecided-unix) (truncate-lines))
+  '((mark-ring nil)))
+

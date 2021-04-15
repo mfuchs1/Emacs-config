@@ -1,0 +1,38 @@
+Monday --weekly
+  7:45-8:35  2B
+  8:40-9:30  1A
+  9:35-10:25 1C
+ 10:40-11:30 1B
+ 12:30-16:30 Gabriel Hort
+
+Tuesday --weekly
+  7:45-8:35  1B
+  8:40-9:30  3A
+  9:35-10:25 4B
+ 12:30-16:30 Gabriel Hort
+
+Wednesday --weekly
+  7:45-8:35  3A
+  8:40-9:30  4A
+  9:35-10:25 3B
+ 11:35-12:25 2A
+ 12:30-13:20 2B
+ 
+Thursday --weekly
+ 10:40-11:30 4C
+ 11:35-12:25 2A
+ 12:30-13:20 1C
+ 
+Friday --weekly
+  7:45-8:35  4C
+  8:40-9:30  4A
+  9:35-10:25 4B
+ 10:40-11:30 1A
+ 11:35-12:25 3B
+ 12:30-16:30 Gabriel Hort
+  
+Saturday --weekly
+
+%%(diary-cyclic 14 10 2 2020)
+ 14:30-15:20 1B [NMS Parsch Schlossstraße]
+ 15:25-16:15 1B [NMS Parsch Schlossstraße]

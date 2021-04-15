@@ -1,0 +1,2 @@
+;;; Generated package description from /home/matthias/.emacs.d/elpa/register-channel-20210120.1618/register-channel.el  -*- no-byte-compile: t -*-
+(define-package "register-channel" "20210120.1618" "Jump around fast using registers" 'nil :commit "ed7f563e92170b758dc878fcb5df88d46d5d44cc" :authors '(("Yang Zhao" . "YangZhao11@users.noreply.github.com")) :maintainer '("Yang Zhao" . "YangZhao11@users.noreply.github.com") :keywords '("convenience"))

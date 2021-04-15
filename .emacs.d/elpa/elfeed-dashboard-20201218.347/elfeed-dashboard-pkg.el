@@ -1,0 +1,2 @@
+;;; Generated package description from /home/matthias/.emacs.d/elpa/elfeed-dashboard-20201218.347/elfeed-dashboard.el  -*- no-byte-compile: t -*-
+(define-package "elfeed-dashboard" "20201218.347" "An extensible frontend for elfeed using org-mode" '((emacs "25.1") (elfeed "3.3.0")) :commit "9e8e212da9ea471bdc58bc0a1f5932833029bb38" :authors '(("Manoj Kumar Manikchand" . "manojm321@protonmail.com")) :maintainer '("Manoj Kumar Manikchand" . "manojm321@protonmail.com") :keywords '("convenience") :url "https://github.com/Manoj321/elfeed-dashboard")

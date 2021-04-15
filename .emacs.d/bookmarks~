@@ -1,0 +1,20 @@
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-capture-last-stored-marker"
+ (filename . "~/org/Aufzeichnungen/Klasse1a.org")
+ (front-context-string . "** Ganze Klasse ")
+ (rear-context-string . "so aufmerksam.\n\n")
+ (position . 2390))
+("org-refile-last-stored"
+ (filename . "~/org/Aufzeichnungen/Klasse1a.org")
+ (front-context-string . "** Ganze Klasse ")
+ (rear-context-string . "so aufmerksam.\n\n")
+ (position . 2390))
+("org-capture-last-stored"
+ (filename . "~/org/org-gcal.org")
+ (front-context-string . "* Beten\n:PROPERT")
+ (rear-context-string . "00-19:05>\n:END:\n")
+ (position . 5237))
+)
