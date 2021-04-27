@@ -1,0 +1,1197 @@
+;; Make startup faster by reducing the frequency of garbage
+;; collection.  The default is 800 kilobytes.  Measured in bytes.
+(setq gc-cons-threshold 64000000)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(LaTeX-csquotes-close-quote "")
+ '(LaTeX-csquotes-open-quote "")
+ '(TeX-source-correlate-method 'synctex)
+ '(TeX-source-correlate-mode t)
+ '(TeX-source-correlate-start-server t)
+ '(TeX-view-program-list '(("Okular" "okular --unique %o#src:%n%b")))
+ '(TeX-view-program-selection
+   '((engine-omega "dvips and gv")
+     (output-dvi "xdvi")
+     (output-pdf "Okular")
+     (output-html "xdg-open")))
+ '(ansi-color-names-vector
+   ["#3c3836" "#fb4933" "#b8bb26" "#fabd2f" "#83a598" "#d3869b" "#8ec07c" "#ebdbb2"])
+ '(custom-enabled-themes '(gruvbox-dark-medium))
+ '(custom-safe-themes
+   '("7661b762556018a44a29477b84757994d8386d6edee909409fabe0631952dad9" default))
+ '(display-time-mode t)
+ '(doc-view-continuous t)
+ '(helm-books-custom-format
+   "#title#
+:PROPERTIES:
+:AUTHORS: #author#
+:PUBLISHER: #publisher#
+:PUBLISHEDDATE: #year#
+:END:")
+ '(helm-ff-lynx-style-map t)
+ '(org-agenda-files
+   '("~/org/Schule_Themen/auferstehung.org" "/home/matthias/org/tasks.org" "/home/matthias/org/org-gcal.org"))
+ '(org-agenda-persistent-filter t)
+ '(org-ref-bibliography-notes "~/org/Bibliography/notes.org")
+ '(org-ref-notes-directory "~/org/Bibliography/")
+ '(org-ref-notes-function 'org-ref-notes-function-one-file)
+ '(org-refile-use-outline-path nil)
+ '(org-reveal-root "file:///home/matthias/Downloads/reveal.js")
+ '(org-reveal-transition "default")
+ '(package-selected-packages
+   '(frame-purpose rainbow-identifiers tracking a anaphora org-ql org-noter org-ref polymode org-brain ox-jekyll-md zetteldeft wikinforg use-package twittering-mode tree-mode symon sx suscolors-theme simplenote2 rtags register-channel rainbow-delimiters ox-twbs ox-reveal org2blog org-web-tools org-plus-contrib org-msg org-journal org-gcal org-drill org-bullets org-alert on-screen notmuch-maildir notmuch-labeler notmuch-bookmarks multiple-cursors modern-cpp-font-lock memoize magit latex-preview-pane highlight-symbol hierarchy helm-swoop helm-spotify-plus helm-orgcard helm-org-rifle helm-org-ql helm-notmuch helm-mu helm-books helm-bm helm-bibtexkey helm-bbdb gruvbox-theme gnuplot flyspell-correct-helm flycheck esup erc-hl-nicks elfeed-org elfeed-goodies company-bibtex company-auctex cmake-ide bbdb-vcard bbdb-csv-import autopair auto-complete-auctex all-the-icons))
+ '(pdf-view-midnight-colors '("#fdf4c1" . "#282828"))
+ '(projectile-enable-caching t)
+ '(window-divider-default-bottom-width 6))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(erc-action-face ((t (:foreground "#8fbcbb"))))
+ '(erc-error-face ((t (:foreground "#bf616a"))))
+ '(erc-input-face ((t (:foreground "#ebcb8b"))))
+ '(erc-notice-face ((t (:foreground "#ebcb8b"))))
+ '(erc-timestamp-face ((t (:foreground "#a3be8c")))))
+
+(require 'package)
+(setq package-enable-at-startup nil)
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("org"       . "http://orgmode.org/elpa/")
+                         ("melpa" . "https://melpa.org/packages/")))
+(package-initialize)
+
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(server-start)
+
+(require 'neotree)
+(global-set-key [f1] 'neotree-toggle)
+(setq icons-theme (if (display-graphic-p) 'icons 'arrow))
+(setq neo-window-width 45)
+
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+(setq dashboard-set-heading-icons t)
+(setq dashboard-set-file-icons t)
+(setq dashboard-startup-banner 'logo)
+(setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+                        (projects . 5)
+                        (agenda . 7)
+                        (registers . 5)))
+(setq dashboard-set-navigator t)
+;; Format: "(icon title help action face prefix suffix)"
+(setq dashboard-navigator-buttons
+      `(;; line1
+        ((,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
+         "Homepage"
+         "Browse homepage"
+         (lambda (&rest _) (browse-url "https://mfuchs1.github.io/")))
+        ("★" "Star" "Show stars" (lambda (&rest _) (show-stars)) warning)
+        ("?" "" "?/h" #'show-help nil "<" ">")
+        (,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
+          "presentations"
+          ""
+          (lambda (&rest _) (browse-url "https://mfuchs1.github.io/presentations/")))
+         ("⚑" nil "Show flags" (lambda (&rest _) (message "flag")) error))))
+
+(load-theme 'gruvbox-dark-medium t)
+(display-time-mode 1)
+(scroll-bar-mode -1)
+(global-visual-line-mode 1)
+(add-hook 'org-mode-hook 'org-indent-mode)
+
+(desktop-save-mode 1)
+
+
+;;Latex
+(add-hook 'LaTeX-mode-hook '(lambda ()
+                        (TeX-fold-mode 1)))
+(setq TeX-quote-after-quote t)
+(setq TeX-open-quote "\"`")
+(setq TeX-close-quote "\"'")
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+
+;;(define-key global-map (kbd "<f1>") 'neotree)
+;;(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+(use-package magit
+  :ensure t
+  :defer 2
+  :config (setq magit-display-buffer-function  ;; Make Magit Fullscreen
+                (lambda (buffer)
+                  (if magit-display-buffer-noselect
+                    ;; the code that called `magit-display-buffer-function'
+                    ;; expects the original window to stay alive, we can't go
+                    ;; fullscreen
+                    (magit-display-buffer-traditional buffer)
+                    (delete-other-windows)
+                    ;; make sure the window isn't dedicated, otherwise
+                    ;; `set-window-buffer' throws an error
+                    (set-window-dedicated-p nil nil)
+                    (set-window-buffer nil buffer)
+                    ;; return buffer's window
+                    (get-buffer-window buffer)))))
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+(require 'printing)
+(pr-update-menus)
+
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c C-l") 'org-insert-link)
+
+(require 'calendar)
+
+(use-package org
+  :mode (("\\.\\(org\\|org_archive\\)$" . org-mode))
+  :ensure org-plus-contrib
+  :defer 1
+  :config 
+  (progn
+    (setq org-hide-leading-stars 'hidestars)
+    (setq org-return-follows-link t)
+    (setq org-drawers (quote ("PROPERTIES" "CLOCKTABLE" "LOGBOOK" "CLOCK")))
+    (setq org-completion-use-ido t)
+    (setq org-tags-exclude-from-inheritance '("review"))))
+
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook 'org-bullets-mode))
+
+;;store org-mode links to messages
+(use-package org-mu4e :defer 1)
+;;store link to message if in header view, not to header query
+(setq org-mu4e-link-query-in-headers-mode nil)
+
+(setq org-log-done 'time)
+(setq org-log-done 'note)
+(setq org-log-into-drawer t)
+
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+
+(setq org-agenda-files (list "/home/matthias/org/tasks.org"
+                             "/home/matthias/org/org-gcal.org"))
+
+;;(setq org-agenda-files '("~/org/"))
+
+(use-package org-gcal
+:ensure t
+:defer 1
+:config
+(setq org-gcal-client-id "583318241668-gspn47mjsemu3eu866652bt74q2n00ch.apps.googleusercontent.com"
+org-gcal-client-secret "9yFuxDCTyZByiqdJjpQg8dZs"
+org-gcal-file-alist '(("matthiasfuchs01@gmail.com" .  "/home/matthias/org/org-gcal.org"))))
+
+(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-fetch) ))
+;; Ich habe die nächste Zeile auskommentiert; vielleicht vermeide ich somit doppelte Einträge in der org-agenda mit capture.
+(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-post-at-point) ))
+
+(global-set-key (kbd "C-c c") 'org-capture)
+
+;; Define the custum capture templates
+(setq org-capture-templates
+        '(("t" "todo zu einem file (link) -> tasks.org" entry (file+headline org-default-notes-file "Inbox")
+	  "* TODO %?\n%u\n%a\n" :empty-lines 1)
+	 ("w" "Waiting For Reply (Mail)" entry (file+headline "~/org/tasks.org" "Inbox") 
+         "* WAITING Antwort auf %a")
+       ("A" "Aufgabe aus Mail" entry (file+headline "~/org/tasks.org" "Inbox") 
+         "* TODO %? , Link: %a")
+       ("T" "todo (Deadline)-> tasks.org" entry (file+headline org-default-notes-file "Inbox")
+	  "* TODO %?\nDEADLINE: %^t\n" :empty-lines 1)
+       ("S" "todo (SCHEDULED)-> tasks.org" entry (file+headline org-default-notes-file "Inbox")
+	  "* TODO %?\nSCHEDULED: %^t\n" :empty-lines 1)
+       ("z" "Zeiteintrag in tasks.org" entry (file+headline "~/org/tasks.org" "Inbox")
+         "* ZKTO %? \n  %i")
+       ("E" "E-Mail" entry (file+headline "~/org/organizer.org" "Mails")
+          "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
+	 ("a" "Appointment --> org-gcal" entry (file  "/home/matthias/org/org-gcal.org")
+	  "* %?\n:PROPERTIES:\n:calendar-id: matthiasfuchs01@gmail.com\n:END:\n:org-gcal:\n:END:\n")
+	 ("m" "Meeting --> tasks.org" entry (file+headline org-default-notes-file "Meetings")
+	  "* APPT Treffen mit %? :MEETING:\n%t" :empty-lines 1)
+	 ("d" "Diary" entry (file+olp+datetree "~/org/tagebuch.org")
+	  "* %?\n%U\n" :empty-lines 1)
+	 ("i" "Idea" entry (file+headline org-default-notes-file "Ideas")
+	  "* %? :IDEA: \n%t" :empty-lines 1)
+	 ("M" "Mitarbeit" entry (file+headline "~/org/students.org" "Mitarbeit")
+	  "* %? :%^{PROMPT}: \n%t\n%a\n" :empty-lines 1)
+	 ("H" "Hefteintrag" entry (file+headline "~/org/students.org" "Hefteintrag")
+	  "* %? :%^{PROMPT}: \n%t\n%a\n" :empty-lines 1)
+	 ("V" "Verhalten" entry (file+headline "~/org/students.org" "Verhalten")
+	  "* %? :%^{PROMPT}: \n%t\n%a\n" :empty-lines 1)
+       ("R" "Reflexionen zum Unterricht (students.org)" entry (file+headline "~/org/students.org" "Reflexionen")
+	  "* %? :%^{PROMPT}: \n%t\n%a\n" :empty-lines 1)
+	 ("h" "book memo" entry (file (concat org-directory "/home/matthias/org/books.org"))
+           "* %(helm-books)")
+     ("n" "Next Task" entry (file+headline org-default-notes-file "Tasks")
+	  "** NEXT %? \nDEADLINE: %t" :empty-lines 1) ))
+
+(setq org-default-notes-file "/home/matthias/org/tasks.org")
+
+;; Ein "!" bedeutet Zeitstempel
+;; Ein "@" bedeutet Notiz
+(setq org-todo-keywords
+ '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@/!)" "APPT(a)" "PROJ(p)" "NOTIZ(n)" "BESPROCHEN(b)"
+             "DELEGATED(g@/!)" "|" "DONE(d!)" "ZKTO(z)" "CANCELED(c@)")))
+
+;; Farben anpassen
+(setq org-todo-keyword-faces
+      '(("TODO"  . (:foreground "#b70101" :weight bold))
+        ("STARTED"  . (:foreground "#b70101" :weight bold))
+        ("APPT"  . (:foreground "sienna" :weight bold))
+        ("PROJ"  . (:foreground "lightblue" :weight bold))
+        ("NOTIZ"  . (:foreground "yellow" :weight bold))
+        ("ZKTO"  . (:foreground "orange" :weight bold))
+        ("WAITING"  . (:foreground "orange" :weight bold))
+        ("BESPROCHEN"  . (:foreground "darkorange" :weight bold))
+        ("REVIEWED"  . (:foreground "forestgreen" :weight bold))
+        ("DONE"  . (:foreground "forestgreen" :weight bold))
+        ("DELEGATED"  . (:foreground "forestgreen" :weight bold))
+        ("CANCELED"  . shadow)))
+
+;; Fast TODO Selection
+(setq org-use-fast-todo-selection t)
+
+;;(setq org-refile-targets '((org-agenda-files :maxlevel . 6)))
+(setq org-refile-targets '((nil :maxlevel . 6)
+                                (org-agenda-files :maxlevel . 6)))
+(setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+(setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+
+(setq org-agenda-include-diary t)
+
+(use-package ox-latex)
+(unless (boundp 'org-latex-classes)
+  (setq org-latex-classes nil))
+
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+             '("org-plain-latex"
+               "\\documentclass{scrartcl}
+               [NO-DEFAULT-PACKAGES]
+               [PACKAGES]
+               [EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+(setq org-latex-with-hyperref nil)
+
+(require 'ox-beamer)
+
+(defun air-org-skip-subtree-if-priority (priority)
+  "Skip an agenda subtree if it has a priority of PRIORITY.
+
+PRIORITY may be one of the characters ?A, ?B, or ?C."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+        (pri-value (* 1000 (- org-lowest-priority priority)))
+        (pri-current (org-get-priority (thing-at-point 'line t))))
+    (if (= pri-value pri-current)
+        subtree-end
+      nil)))
+      
+(defun air-org-skip-subtree-if-habit ()
+  "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (if (string= (org-entry-get nil "STYLE") "habit")
+        subtree-end
+      nil)))
+
+(setq org-agenda-custom-commands
+      '(("d" "Daily agenda and all TODOs"
+         ((tags "PRIORITY=\"A\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "High-priority unfinished tasks:")))
+          (agenda "" ((org-agenda-ndays 1)))
+          (alltodo ""
+                   ((org-agenda-skip-function '(or (air-org-skip-subtree-if-habit)
+                                                   (air-org-skip-subtree-if-priority ?A)
+                                                   (org-agenda-skip-if nil '(scheduled deadline))))
+                    (org-agenda-overriding-header "ALL normal priority tasks:"))))
+                    ((org-agenda-tag-filter-preset '("-hide")))
+         ((org-agenda-compact-blocks t)))))
+              
+
+(use-package twittering-mode)
+(setq twittering-use-master-password t)
+(defalias 'epa--decode-coding-string 'decode-coding-string)
+(setq twittering-connection-type-order '(wget curl urllib-http native urllib-https))
+(setq twittering-allow-insecure-server-cert t)
+
+(require 'mu4e)
+
+(setq mail-user-agent 'mu4e-user-agent)
+
+(add-to-list 'mu4e-view-actions
+  '("View in Browser" . mu4e-action-view-in-browser) t)
+  
+(setq mu4e-html2text-command "w3m -T text/html")
+  
+(add-hook 'mu4e-view-mode-hook
+  (lambda()
+    ;; try to emulate some of the eww key-bindings
+    (local-set-key (kbd "<tab>") 'shr-next-link)
+    (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+
+(use-package org-msg
+  :ensure t
+  :defer 1
+  :config
+(setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil")
+(setq org-msg-startup "hidestars indent inlineimages")
+(setq org-msg-greeting-fmt "\nLiebe(r) *%s*,\n\n")
+(setq org-msg-greeting-fmt-mailto t)
+(setq org-msg-greeting-name-limit 3)
+(setq org-msg-signature "
+
+Mit freundlichen Grüßen,\n")
+ (org-msg-mode))
+
+(require 'bbdb)
+(if t (require 'mu4e-view))
+(bbdb-initialize)
+
+(use-package helm-bbdb
+:defer 1
+  :requires (helm))
+  
+(defvar mu4e-view-mode-map)
+(setq shr-color-visible-luminance-min 80)
+
+;;;###autoload
+(defun bbdb-insinuate-mu4e ()
+  "Hook BBDB into mu4e.
+Do not call this in your init file.  Use `bbdb-initialize'."
+  ;; Tackle headers later
+  ;; (define-key mu4e-headers-mode-map ":" 'bbdb-mua-display-sender)
+  ;; (define-key mu4e-headers-mode-map ";" 'bbdb-mua-edit-field-sender)
+  ;; Do we need keybindings for more commands?  Suggestions welcome.
+  (define-key mu4e-view-mode-map ":" 'bbdb-mua-display-sender)
+  (define-key mu4e-view-mode-map ";" 'bbdb-mua-edit-field-sender))
+
+(provide 'bbdb-mu4e)
+
+;; don't save message to Sent Messages, GMail/IMAP will take care of this
+(setq mu4e-sent-messages-behavior 'delete)
+
+;; allow for updating mail using 'U' in the main view:
+(setq mu4e-get-mail-command "mbsync -a")
+
+;; something about ourselves
+;; I don't use a signature...
+(setq
+ user-mail-address "matthiasfuchs01@gmail.com"
+ user-full-name  "Matthias Fuchs"
+ message-signature
+   (concat
+     "Email written and sent by Emacs / notmuch:\n"
+     "https://www.gnu.org/software/emacs/\n")
+)
+
+;; sending mail -- replace USERNAME with your gmail username
+;; also, make sure the gnutls command line utils are installed
+;; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
+(use-package smtpmail)
+(setq message-send-mail-function 'smtpmail-send-it)
+(setq mu4e-change-filenames-when-moving t)
+   
+(add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
+(setq mu4e-contexts
+    `( ,(make-mu4e-context
+	  :name "Privat"
+	  :enter-func (lambda () (mu4e-message "Entering Private context"))
+          :leave-func (lambda () (mu4e-message "Leaving Private context"))
+	  ;; we match based on the contact-fields of the message
+	  :match-func (lambda (msg)
+			(when msg
+			  (mu4e-message-contact-field-matches msg
+			    :to "matthiasfuchs01@gmail.com")))
+	  :vars '( ( user-mail-address	    . "matthiasfuchs01@gmail.com"  )
+		( user-full-name	    . "Matthias Fuchs" )
+		(mu4e-sent-folder . "/gmail/[Gmail]/Gesendet")
+	    (mu4e-drafts-folder . "/gmail/[Gmail]/Entw&APw-rfe")
+	    (mu4e-trash-folder . "/gmail/[Gmail]/Papierkorb")
+		   ( mu4e-compose-signature .
+		     (concat
+		       "*Matthias Fuchs*\n\n"
+		       "Grödig, Österreich\n"))
+		       (starttls-gnutls-program "/usr/bin/gnutls-cli")
+		       (starttls-use-gnutls t)
+        (smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil)))
+        (smtpmail-auth-credentials
+        (expand-file-name "/home/matthias/.authinfo.gpg"))
+        (user-mail-address . "matthiasfuchs01@gmail.com")
+        (smtpmail-smtp-user . "matthiasfuchs01")
+        (smtpmail-default-smtp-server . "smtp.gmail.com")
+        (smtpmail-smtp-server . "smtp.gmail.com")
+        (smtpmail-smtp-service . 587)
+        (mu4e-maildir-shortcuts . ( ("/gmail/INBOX"            . ?i)
+					("/gmail/[Gmail]/Gesendet" . ?s)
+					("/gmail/[Gmail]/Papierkorb"       . ?t)
+					("/gmail/[Gmail]/Alle Nachrichten"  . ?a)
+					("/gmail/[Gmail]/Entw&APw-rfe"    . ?d)))
+   ))
+       ,(make-mu4e-context
+	  :name "Work"
+	  :enter-func (lambda () (mu4e-message "Switch to the Work context"))
+	  ;; no leave-func
+	  ;; we match based on the maildir of the message
+	  ;; this matches maildir /Maildir and its sub-directories
+	  :match-func (lambda (msg)
+			(when msg
+			  (string-match-p "/outlook" (mu4e-message-field msg :maildir))))
+	  :vars '( ( user-mail-address	     . "matthias.fuchs@golling.schule" )
+            ( user-full-name	     . "Matthias Fuchs" )
+            (mu4e-sent-folder . "/outlook/Gesendete Elemente")
+            (mu4e-drafts-folder . "/outlook/Entw&APw-rfe")
+            (mu4e-trash-folder . "/outlook/Gel&APY-schte Elemente")  
+            ( mu4e-compose-signature  .
+		     (concat
+		       "*Prof. Matthias Fuchs BEd*\n\n"
+		       "Lehrer für röm.-kath. Religion, MS Golling\n"))
+		       (starttls-gnutls-program "/usr/bin/gnutls-cli")
+		       (starttls-use-gnutls t)
+   (smtpmail-starttls-credentials '(("smtp.office365.com" 587 nil nil)))
+   (smtpmail-auth-credentials
+      (expand-file-name "/home/matthias/.authinfo.gpg"))
+   ( user-mail-address   . "matthias.fuchs@golling.schule")
+   ( user-full-name	     . "Matthias Fuchs" )
+   (smtpmail-smtp-user . "matthias.fuchs@golling.schule")
+   (smtpmail-default-smtp-server . "smtp.office365.com")
+   (smtpmail-smtp-server . "smtp.office365.com")
+   (smtpmail-stream-type   . starttls)
+   (smtpmail-smtp-service . 587)
+   (mu4e-maildir-shortcuts . ( ("/outlook/INBOX"            . ?i)
+					("/outlook/Gesendete Elemente" . ?s)
+					("/outlook/Gel&APY-schte Elemente"       . ?t)
+					("/outlook/Entw&APw-rfe"    . ?d)))
+   ))))
+
+  ;; set `mu4e-context-policy` and `mu4e-compose-policy` to tweak when mu4e should
+  ;; guess or ask the correct context, e.g.
+
+  ;; start with the first (default) context;
+  ;; default is to ask-if-none (ask when there's no context yet, and none match)
+  ;; (setq mu4e-context-policy 'pick-first)
+
+  ;; compose with the current context is no context matches;
+  ;; default is to ask
+  ;; (setq mu4e-compose-context-policy nil)
+  
+
+
+(require 'bbdb-csv-import)
+
+(use-package deft
+  :ensure t
+  :config (setq deft-directory "~/org/notes/")
+  (setq deft-strip-title-regexp "\\(?:^%+\\|^#\\+TITLE: *\\|^#\\+COMMENT: *\\|^[#* ]+\\|-\\*-[[:alpha:]]+-\\*-\\|^Title:[  ]*\\|#+$\\)")
+  (setq deft-directory "~/org/notes/")
+  (setq deft-text-mode 'org-mode)
+  (setq deft-extension "org")
+  (setq deft-extensions '("org"))
+  (setq deft-default-extension "org")
+  (setq deft-use-filename-as-title nil)
+  (setq deft-use-filename-as-title nil)
+  (setq deft-use-filter-string-for-filename nil)
+  (setq deft-use-filter-string-for-filename nil))
+
+(defun show-notes ()
+  (interactive)
+  (hs-kill-buffers "*Deft*")
+  (when deft-directory "~/projects/bep/org/"
+        (setq-default deft-directory "~/org/notes/"))
+  (deft))
+
+(defun show-website ()
+  (interactive)
+  (hs-kill-buffers "*Deft*")
+  (setq-default deft-directory "~/projects/org-website/")
+  (deft))
+
+(defun show-itsec-notes ()
+  (interactive)
+  (hs-kill-buffers "*Deft*")
+  (setq-default deft-directory "~/projects/itsec-notes/")
+  (deft))
+
+(defun show-programming-notes ()
+  (interactive)
+  (hs-kill-buffers "*Deft*")
+  (setq-default deft-directory "~/projects/programming-notes/")
+  (deft))
+
+;; Deft mit Notizen auf C-c n
+(global-set-key "\C-cn" 'show-notes)
+(global-set-key "\C-cw" 'show-website)
+
+;; Deft mit programming notes auf C-c p
+(global-set-key "\C-cp" 'show-programming-notes)
+(global-set-key "\C-ci" 'show-itsec-notes)
+
+;; Start Deft in insert-mode
+;;(evil-set-initial-state 'deft-mode 'insert)
+
+(require 'cl)
+(defun hs-kill-buffers (regexp)
+  "Kill buffers matching REGEXP without asking for confirmation."
+  (interactive "sKill buffers matching this regular expression: ")
+  (cl-flet ((kill-buffer-ask (buffer) (kill-buffer buffer)))
+    (kill-matching-buffers regexp)))
+
+(setq deft-recursive t)
+
+(use-package zetteldeft
+  :ensure t
+  :defer 1
+  :after deft
+  :config (zetteldeft-set-classic-keybindings))
+
+(require 'powerline)
+(powerline-default-theme)
+
+(require 'helm)
+(require 'helm-config)
+(customize-set-variable 'helm-ff-lynx-style-map t)
+(define-key helm-map (kbd "<left>") 'helm-previous-source)
+(define-key helm-map (kbd "<right>") 'helm-next-source)
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+
+;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-c C-h") 'helm-for-files)
+
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+
+(when (executable-find "curl")
+  (setq helm-google-suggest-use-curl-p t))
+
+(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+      helm-ff-file-name-history-use-recentf t
+      helm-echo-input-in-header-line t)
+
+(defun spacemacs//helm-hide-minibuffer-maybe ()
+  "Hide minibuffer in Helm session if we use the header line as input field."
+  (when (with-helm-buffer helm-echo-input-in-header-line)
+    (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
+      (overlay-put ov 'window (selected-window))
+      (overlay-put ov 'face
+                   (let ((bg-color (face-background 'default nil)))
+                     `(:background ,bg-color :foreground ,bg-color)))
+      (setq-local cursor-type nil))))
+
+
+(add-hook 'helm-minibuffer-set-up-hook
+          'spacemacs//helm-hide-minibuffer-maybe)
+
+(setq helm-autoresize-max-height 0)
+(setq helm-autoresize-min-height 20)
+(helm-autoresize-mode 1)
+
+(helm-mode 1)
+
+(require 'helm-swoop)
+
+;; Change the keybinds to whatever you like :)
+(global-set-key (kbd "M-i") 'helm-swoop)
+(global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)
+(global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
+(global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+
+;; When doing isearch, hand the word over to helm-swoop
+(define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+;; From helm-swoop to helm-multi-swoop-all
+(define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+;; When doing evil-search, hand the word over to helm-swoop
+;; (define-key evil-motion-state-map (kbd "M-i") 'helm-swoop-from-evil-search)
+
+;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
+(define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
+
+;; Move up and down like isearch
+(define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+(define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+(define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+(define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+
+;; Save buffer when helm-multi-swoop-edit complete
+(setq helm-multi-swoop-edit-save t)
+
+;; If this value is t, split window inside the current window
+(setq helm-swoop-split-with-multiple-windows nil)
+
+;; Split direcion. 'split-window-vertically or 'split-window-horizontally
+(setq helm-swoop-split-direction 'split-window-vertically)
+
+;; If nil, you can slightly boost invoke speed in exchange for text color
+(setq helm-swoop-speed-or-color nil)
+
+;; ;; Go to the opposite side of line from the end or beginning of line
+(setq helm-swoop-move-to-line-cycle t)
+
+;; Optional face for line numbers
+;; Face name is `helm-swoop-line-number-face`
+(setq helm-swoop-use-line-number-face t)
+
+;; If you prefer fuzzy matching
+(setq helm-swoop-use-fuzzy-match t)
+
+;; If you would like to use migemo, enable helm's migemo feature
+;; (helm-migemo-mode 1)
+
+(require 'helm-org-rifle)
+(global-set-key (kbd "M-s") 'helm-org-rifle)
+
+(require 'helm-mu)
+(setq helm-mu-default-search-string "(maildir:/INBOX OR maildir:/Sent)")
+(define-key mu4e-main-mode-map "s" 'helm-mu)
+(define-key mu4e-headers-mode-map "s" 'helm-mu)
+(define-key mu4e-view-mode-map "s" 'helm-mu)
+(global-set-key (kbd "M-c") 'helm-mu-contacts)
+
+(autoload 'helm-company "helm-company") ;; Not necessary if using ELPA package
+(eval-after-load 'company
+  '(progn
+     (define-key company-mode-map (kbd "C-:") 'helm-company)
+     (define-key company-active-map (kbd "C-:") 'helm-company)))
+
+
+(require 'notmuch)
+;;(require 'notmuch-labeler)
+(setq notmuch-search-oldest-first nil)
+(setq mail-specify-envelope-from t)
+(setq message-sendmail-envelope-from 'header)
+(setq mail-envelope-from 'header)
+(setq notmuch-always-prompt-for-sender t)
+
+;;;Diverses
+
+
+(require 'flyspell-correct-helm)
+(define-key flyspell-mode-map (kbd "C-;") 'flyspell-correct-wrapper)
+
+(require 'multiple-cursors)
+
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
+(require 'register-channel)
+(register-channel-mode 1)
+
+(require 'org-web-tools)
+(global-set-key (kbd "M-u") 'org-web-tools-insert-link-for-url)
+
+(global-set-key (kbd "M-w") 'org-web-tools-insert-web-page-as-entry)
+
+(require 'helm-orgcard)
+
+;;auto-complete
+(ac-config-default)
+(add-to-list 'ac-modes 'org-mode)
+(global-auto-complete-mode t)
+
+(use-package company-auctex
+  :after (auctex company)
+  :defer 1
+  :config (company-auctex-init))
+(use-package auto-complete-auctex)
+
+(require 'company-bibtex)
+(add-to-list 'company-backends 'company-bibtex)
+
+(setq company-bibtex-bibliography
+   '("/home/matthias/org/Bibliography/Literatur.bib"))
+
+;;org2blog
+
+(use-package org2blog
+             :ensure t
+             :defer 1)
+(setq org2blog/wp-blog-alist
+      '(("fuchsmatthias"
+         :url "https://fuchsmatthias.wordpress.com/xmlrpc.php"
+         :username "fuchsmatthias"
+         :password "Pax@Bonum1!?"
+         :default-title "Post"
+         :default-categories ("perl")
+         :tags-as-categories nil)
+         ))
+(setq org2blog/wp-use-sourcecode-shortcode t)
+;; (global-set-key (kbd "C-c M-p d") 'org2blog/wp-post-buffer)
+;; (global-set-key (kbd "C-c M-p p") 'org2blog/wp-post-buffer)
+
+
+(latex-preview-pane-enable)
+
+(require 'on-screen)
+(on-screen-global-mode +1)
+
+;;Helm-Ergänzungen: helm-books, helm-bibtex
+
+
+(require 'helm-books)
+(setq helm-books-custom-format "#title#\n:PROPERTIES:\n:AUTHORS: #author#\n:PUBLISHER: #publisher# \n:YEAR: #year#\n:END:") ; Default is "#title#\n:PROPERTIES:\n:AUTHORS:#author#:END:"
+
+(autoload 'helm-bibtex "helm-bibtex" "" t)
+(setq bibtex-completion-bibliography '("/home/matthias/org/Bibliography/Literatur.bib"))
+(setq bibtex-completion-library-path '("/home/matthias/org/Bibliographybibtex-pdfs"))
+(setq bibtex-completion-pdf-field "File")
+(setq bibtex-completion-notes-path "/home/matthias/org/Bibliography/notes.org")
+(global-set-key (kbd "C-x C-b") 'helm-bibtex)
+
+
+
+;;helm-spotify-plus
+(require 'helm-spotify-plus)
+(global-set-key (kbd "C-c s s") 'helm-spotify-plus)  ;; s for SEARCH
+(global-set-key (kbd "C-c s f") 'helm-spotify-plus-next)
+(global-set-key (kbd "C-c s b") 'helm-spotify-plus-previous)
+(global-set-key (kbd "C-c s p") 'helm-spotify-plus-play) 
+(global-set-key (kbd "C-c s g") 'helm-spotify-plus-pause) ;; g cause you know.. C-g stop things :)
+
+;;Eshell, ox-reveal
+
+
+(require 'highlight-symbol)
+(global-set-key [(control f3)] 'highlight-symbol)
+(global-set-key [f3] 'highlight-symbol-next)
+(global-set-key [(shift f3)] 'highlight-symbol-prev)
+(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
+
+(require 'ox-reveal)
+(setq org-reveal-root "file:///home/matthias/Downloads/reveal.js")
+
+(require 'ox-twbs)
+
+(require 'autopair)
+(autopair-global-mode) ;; to enable in all buffers
+
+(require 'f)
+
+;;bm, eshell, 
+
+
+(require 'bm)
+(global-set-key (kbd "<C-f2>") 'bm-toggle)
+(global-set-key (kbd "<f2>")   'bm-next)
+(global-set-key (kbd "<S-f2>") 'bm-previous)
+
+(global-set-key (kbd "<left-fringe> <mouse-5>") 'bm-next-mouse)
+(global-set-key (kbd "<left-fringe> <mouse-4>") 'bm-previous-mouse)
+(global-set-key (kbd "<left-fringe> <mouse-1>") 'bm-toggle-mouse)
+
+(add-to-list 'org-file-apps 
+             '("\\.pdf\\'" . (lambda (file link)
+                                     (org-pdfview-open link))))
+
+(require 'symon)
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+(use-package gnuplot)
+
+;;Org-babel
+
+
+(org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (shell . t)
+     (js . t)
+     (latex . t)
+     (org . t)
+     (dot . t)
+     (gnuplot . t)
+     (ruby . t)
+     (screen . nil)
+     (ledger . t)
+     (C . t)
+     (sql . t)
+     (ditaa . t)))
+
+
+
+;;Org-super-agenda
+
+
+(use-package org-super-agenda
+  :ensure t
+  :defer 1
+  :config
+ (setq org-super-agenda-groups '((:name "Heute"
+				:time-grid t
+				:scheduled today)
+			   (:name "Heute fällig"
+				:deadline today)
+			   (:name "Wichtig"
+				:priority "A")
+			   (:name "Überfällig"
+				:deadline past)
+			   (:name "Bald fällig"
+				:deadline future)
+			   (:name "Warteschlange"
+			       :todo "WAIT"))))
+
+(add-to-list 'display-buffer-alist
+             '("." nil (reusable-frames . t)))
+
+
+;;Elfeed
+
+
+(require 'elfeed)
+(global-set-key (kbd "C-x w") 'elfeed)
+;; Somewhere in your .emacs file
+(setq elfeed-feeds
+      '("https://rss.orf.at/news.xml"
+        "https://kenfm.de/feed/"
+	"https://www.addendum.org/feed/rss2-addendum"))
+
+;; Load elfeed-org
+(require 'elfeed-org)
+
+;; Initialize elfeed-org
+;; This hooks up elfeed-org to read the configuration when elfeed
+;; is started with =M-x elfeed=
+(elfeed-org)
+
+;; Optionally specify a number of files containing elfeed
+;; configuration. If not set then the location below is used.
+;; Note: The customize interface is also supported.
+(setq rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org"))
+
+
+;;Folgende Datei soll zum Start geladen werden
+
+
+;; Keinen Splash-Screen
+(setq inhibit-splash-screen t)
+
+(use-package esup
+  :ensure t
+  :defer 1
+  ;; To use MELPA Stable use ":pin mepla-stable",
+  :pin melpa
+  :commands (esup))
+
+(require 'esup)
+;; Work around a bug where esup tries to step into the byte-compiled
+;; version of `cl-lib', and fails horribly.
+(setq esup-depth 0)
+
+(use-package simplenote2
+ :ensure t
+ :defer 2
+ :config
+(setq simplenote2-email "matthiasfuchs01@gmail.com")
+(setq simplenote2-password "Pax@Bonum1!?")
+(simplenote2-setup)
+(add-hook 'simplenote2-create-note-hook
+	  (lambda ()
+	    (simplenote2-set-markdown)
+	    (simplenote2-add-tag "new")))
+(add-hook 'simplenote2-note-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-t") 'simplenote2-add-tag)
+            (local-set-key (kbd "C-c C-c") 'simplenote2-push-buffer)
+            (local-set-key (kbd "C-c C-d") 'simplenote2-pull-buffer))))
+            
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+  
+(add-to-list 'load-path "/home/matthias/.emacs.d/sword-to-org/")
+(require 'sword-to-org)
+
+(require 'rtags) ;; optional, must have rtags installed
+(cmake-ide-setup)
+
+(use-package erc
+  :delight "ε "
+  :preface
+  (defun my/erc-browse-last-url ()
+    "Searchs backwards through an ERC buffer, looking for a URL. When a URL is
+     found, it prompts you to open it."
+    (interactive)
+    (save-excursion
+      (let ((ffap-url-regexp "\\(https?://\\)."))
+        (ffap-next-url t t))))
+
+  (defun my/erc-count-users ()
+    "Displays the number of users and ops connected on the current channel."
+    (interactive)
+    (if (get-buffer "irc.freenode.net:6667")
+        (let ((channel (erc-default-target)))
+          (if (and channel (erc-channel-p channel))
+              (let ((hash-table (with-current-buffer (erc-server-buffer)
+                                  erc-server-users))
+                    (users 0)
+                    (ops 0))
+                (maphash (lambda (k v)
+                           (when (member (current-buffer)
+                                         (erc-server-user-buffers v))
+                             (cl-incf users))
+                           (when (erc-channel-user-op-p k)
+                             (cl-incf ops)))
+                         hash-table)
+                (message "%d users (%s ops) are online on %s" users ops channel))
+            (user-error "The current buffer is not a channel")))
+      (user-error "You must first be connected on IRC")))
+
+  (defun my/erc-get-ops ()
+    "Displays the names of ops users on the current channel."
+    (interactive)
+    (if (get-buffer "irc.freenode.net:6667")
+        (let ((channel (erc-default-target)))
+          (if (and channel (erc-channel-p channel))
+              (let (ops)
+                (maphash (lambda (nick cdata)
+                           (if (and (cdr cdata)
+                                    (erc-channel-user-op (cdr cdata)))
+                               (setq ops (cons nick ops))))
+                         erc-channel-users)
+                (if ops
+                    (message "The online ops users are: %s"  (mapconcat 'identity ops " "))
+                  (message "There are no ops users online on %s" channel)))
+            (user-error "The current buffer is not a channel")))
+      (user-error "You must first be connected on IRC")))
+
+  (defun my/erc-notify (nickname message)
+    "Displays a notification message for ERC."
+    (let* ((channel (buffer-name))
+           (nick (erc-hl-nicks-trim-irc-nick nickname))
+           (title (if (string-match-p (concat "^" nickname) channel)
+                      nick
+                    (concat nick " (" channel ")")))
+           (msg (s-trim (s-collapse-whitespace message))))
+      (alert (concat nick ": " msg) :title title)))
+
+  (defun my/erc-preprocess (string)
+    "Avoids channel flooding."
+    (setq str (string-trim (replace-regexp-in-string "\n+" " " str))))
+
+  (defun my/erc-reset-track-mode ()
+    "Resets ERC track mode."
+    (interactive)
+    (setq erc-modified-channels-alist nil)
+    (erc-modified-channels-update)
+    (erc-modified-channels-display)
+    (force-mode-line-update))
+
+  (defun my/erc-start-or-switch ()
+    "Connects to ERC, or switch to last active buffer."
+    (interactive)
+    (if (get-buffer "irc.freenode.net:6667")
+        (erc-track-switch-buffer 1)
+      (erc :server "irc.freenode.net" :port 6667 :nick "_thelion_")))
+  :hook ((ercn-notify . my/erc-notify)
+         (erc-send-pre . my/erc-preprocess))
+  :custom-face
+  (erc-action-face ((t (:foreground "#8fbcbb"))))
+  (erc-error-face ((t (:foreground "#bf616a"))))
+  (erc-input-face ((t (:foreground "#ebcb8b"))))
+  (erc-notice-face ((t (:foreground "#ebcb8b"))))
+  (erc-timestamp-face ((t (:foreground "#a3be8c"))))
+  :custom
+  (erc-autojoin-channels-alist '(("freenode.net" "#archlinux" "#archlinux.de"                                   "#emacs""#i3" "#latex" "#manjaro" "#xfce" "#freenode" "#erc" "#org-mode")))
+  (erc-autojoin-timing 'ident)
+  (erc-fill-function 'erc-fill-static)
+  (erc-fill-static-center 22)
+  (erc-header-line-format "%n on %t (%m)")
+  (erc-hide-list '("JOIN" "PART" "QUIT"))
+  (erc-join-buffer 'bury)
+  (erc-kill-buffer-on-part t)
+  (erc-kill-queries-on-quit t)
+  (erc-kill-server-buffer-on-quit t)
+  (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+  (erc-lurker-threshold-time 86400)
+  (erc-prompt-for-nickserv-password nil)
+  (erc-server-reconnect-attempts 5)
+  (erc-server-reconnect-timeout 3)
+  (erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
+                             "324" "329" "332" "333" "353" "477"))
+  :config
+  (add-to-list 'erc-modules 'notifications)
+  (add-to-list 'erc-modules 'spelling)
+  (erc-services-mode 1)
+  (erc-update-modules))
+
+(use-package erc-hl-nicks :after erc)
+(add-to-list 'load-path "/home/matthias/.emacs.d/erc-5.3-extras/")
+(use-package erc-nicklist :after erc)
+
+(use-package sx
+  :config
+  (bind-keys :prefix "C-x s"
+             :prefix-map my-sx-map
+             :prefix-docstring "Global keymap for SX."
+             ("q" . sx-tab-all-questions)
+             ("i" . sx-inbox)
+             ("o" . sx-open-link)
+             ("u" . sx-tab-unanswered-my-tags)
+             ("a" . sx-ask)
+             ("s" . sx-search)))
+             
+(use-package wikinforg
+  :ensure t)
+  
+(use-package org-roam
+      :ensure t
+      :hook
+      (after-init . org-roam-mode)
+      :custom
+      (org-roam-directory "/home/matthias/org/")
+      :bind (:map org-roam-mode-map
+              (("C-c r l" . org-roam)
+               ("C-c r f" . org-roam-find-file)
+               ("C-c r g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c r i" . org-roam-insert))
+              (("C-c r I" . org-roam-insert-immediate))))
+
+(setq org-roam-capture-templates
+        '(("t" "Themen für Schule" entry (function org-roam--capture-get-point)
+           "%?"
+            :file-name "Schule_Themen/${slug}"
+            :head "#+TITLE: ${title}\n"
+            :unnarrowed t)
+          ("s" "persönliches Studium" entry (function org-roam--capture-get-point)
+           "%?"
+            :file-name "Studium/${slug}"
+            :head "#+TITLE: ${title}\n"
+            :unnarrowed t)
+          ("d" "default" plain (function org-roam--capture-get-point)
+              "%?"
+              :file-name "${slug}"
+              :head "#+TITLE: ${title}\n"
+              :unnarrowed t)))
+              
+;; If you installed via MELPA
+(use-package org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :bind (:map org-mode-map
+         (("C-c o a" . orb-note-actions))))
+  
+(setq orb-preformat-keywords
+   '(("citekey" . "=key=") "title" "url" "file" "author-or-editor" "keywords"))
+
+(setq orb-templates
+      '(("r" "ref" plain (function org-roam-capture--get-point)
+         ""
+         :file-name "${citekey}"
+         :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}
+
+- tags ::
+- keywords :: ${keywords}
+
+* ${title}
+:PROPERTIES:
+:Custom_ID: ${citekey}
+:URL: ${url}
+:AUTHOR: ${author-or-editor}
+:NOTER_DOCUMENT: %(orb-process-file-field \"${citekey}\")
+:NOTER_PAGE:
+:END:")))
+  
+(setq org-roam-dailies-directory "~/org/daily/")
+
+(setq org-roam-dailies-capture-templates
+      '(("s" "Schule" entry
+         #'org-roam-capture--get-point
+         "* %?"
+         :file-name "daily/%<%Y-%m-%d>"
+         :head "#+title: %<%Y-%m-%d>\n"
+         :olp ("School notes"))
+        ("j" "journal" entry
+         #'org-roam-capture--get-point
+         "* %?"
+         :file-name "daily/%<%Y-%m-%d>"
+         :head "#+title: %<%Y-%m-%d>\n"
+         :olp ("Journal"))))
+         
+(use-package org-roam-server
+  :ensure t
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8080
+        org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
+        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
+
+(require 'org-roam-protocol)
+
+(use-package org-brain :ensure t
+  :init
+  (setq org-brain-path "/home/matthias/org/brain")
+  ;; For Evil users
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
+  :config
+  (bind-key "C-c b" 'org-brain-prefix-map org-mode-map)
+  (setq org-id-track-globally t)
+  (setq org-id-locations-file "~/.emacs.d/.org-id-locations")
+  (add-hook 'before-save-hook #'org-brain-ensure-ids-in-buffer)
+  (push '("b" "Brain" plain (function org-brain-goto-end)
+          "* %i%?" :empty-lines 1)
+        org-capture-templates)
+  (setq org-brain-visualize-default-choices 'all)
+  (setq org-brain-title-max-length 12)
+  (setq org-brain-include-file-entries nil
+        org-brain-file-entries-use-title nil))
+        
+(use-package org-ref
+    :ensure t
+    :after org
+    :config
+    (setq reftex-default-bibliography '("~/org/Bibliography/Literatur.bib"))
+    (setq org-ref-notes-directory '("~/org/Bibliography/"))
+    (setq org-ref-bibliography-notes "~/org/Bibliography/notes.org")
+    (setq org-ref-default-bibliography '("~/org/Bibliography/Literatur.bib"))
+    (setq org-ref-pdf-directory "~/org/Bibliography/bibtex-pdfs/"))
+(require 'org-ref)
+
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold 800000)
+;;(put 'upcase-region 'disabled nil)
